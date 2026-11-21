@@ -1,0 +1,14 @@
+# Secrets — never commit
+config.json
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Caches / logs
+.cache/
+huggingface/
+*.log
