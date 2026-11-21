@@ -1,0 +1,35 @@
+{
+  "name": "aurora-stay-qna",
+  "image": "mcr.microsoft.com/devcontainers/python:3.13",
+
+  // Both services run in THIS container, so the frontend's hardcoded
+  // http://localhost:7860 reaches the backend exactly like it did on localhost.
+  "forwardPorts": [7860, 8501],
+  "portsAttributes": {
+    "7860": { "label": "backend (Flask API)", "onAutoForward": "silent" },
+    "8501": { "label": "frontend (Streamlit)", "onAutoForward": "openPreview" }
+  },
+
+  // Non-secret config. The LLM proxy base URL is public; only the key is a secret.
+  "containerEnv": {
+    "OPENAI_API_BASE": "https://aibe.mygreatlearning.com/openai/v1",
+    "OPENAI_BASE_URL": "https://aibe.mygreatlearning.com/openai/v1",
+    "HF_HOME": "/home/vscode/.cache/huggingface"
+  },
+
+  // Set OPENAI_API_KEY as a Codespaces Secret (repo Settings -> Secrets and
+  // variables -> Codespaces). It is injected as an env var; never committed.
+  "secrets": {
+    "OPENAI_API_KEY": {
+      "description": "Great Learning OpenAI proxy key (required by the backend)."
+    }
+  },
+
+  "postCreateCommand": "bash .devcontainer/postcreate.sh",
+
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python"]
+    }
+  }
+}
